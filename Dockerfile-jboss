@@ -1,0 +1,3 @@
+FROM jboss/wildfly
+#COPY OR ADD
+ADD target/*war /opt/jboss/wildfly/standalone/deployments/ebay.war
