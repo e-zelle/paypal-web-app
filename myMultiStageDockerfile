@@ -1,0 +1,12 @@
+#git
+FROM alpine/git as repo
+WORKDIR /app
+RUN git clone https://github.com/e-zelle/paypal-web-app.git
+#Maven
+FROM maven:3.5-jdk-8-alpine as build
+WORKDIR /app
+COPY --from=repo /app/paypal-web-app /app
+RUN mvn clean package
+#Tomcat
+FROM tomcat:8.0.20-jre8
+COPY --from=build /app/target/*war /usr/local/tomcat/webapps/
